@@ -1,0 +1,61 @@
+<script>
+    // ES5 Object
+
+    // function declaration: able to use before declaration
+    console.log(a);
+    function a(a, b) {
+        return a + b;
+    }
+
+    // function expression: able to use after declaration
+    const b = function(a1, b1) {
+        return a1 + b1;
+    }
+    console.log(b);
+
+    // IIFE
+    var obj = (
+        function() {
+            console.log(10 + 20);
+        }
+    )();
+
+    // ES5 Object
+    const Obj2 = (function(){
+        function Obj2() { // constructor who has same name with itself
+            this.a = 10;
+            this.b = 20;
+        }
+        Obj2.prototype.sum = function(){ // function expression & creating method
+            return this.a + this.b;
+        }
+        return Obj2;
+    })();
+    const obj3 = new Obj2(); // making instance
+
+    // ES6 Object
+    class Human {
+        constructor(name, type) {
+            this.name = name;
+            this.type = type;
+        }
+        showInfo() {
+            // console.log(this.name + " is " + this.type + " blood type.");
+            console.log(`${this.name} is ${this.type} blood type.`);
+        }
+    }
+    const user = new Human("Sihyeon", 'A');
+    user.showInfo();
+
+    // ES5 function expression
+    const fn = function(a) {
+        console.log(this); // this is window global object
+        return a + 10;
+    };
+    // ES6 function expression
+    const fn2 = (a) => {
+        console.log(this); // this is fn2
+        return a + 10;
+    };
+    const fn3 = a => a + 10; // if it needs one argument, can skip brackets
+</script>
