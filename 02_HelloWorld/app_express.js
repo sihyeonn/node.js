@@ -19,3 +19,10 @@ app.get("/french", (req, res) => {
 app.get("/spanish", (req, res) => {
     res.send("Hola Mundo")
 });
+
+app.get("/home", (req, res) => {
+    let name = req.query.name;
+    if (name === undefined)
+        name = 'World';
+    res.send(`<h1>Hello, ${name}!</h1>`);
+});
