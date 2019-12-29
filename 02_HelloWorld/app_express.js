@@ -4,6 +4,9 @@ const host = '127.0.0.1';
 const port = 3000;
 const default_lang = 'english';
 
+// Make public directory to client-accessible static directory 
+app.use("/", express.static("./public"));
+
 const HELLO = {
     'french': 'Bonjour',
     'spanish': 'Hola',
@@ -20,9 +23,22 @@ app.listen(port, () => { // = app.listen(port, host, () => {});
     console.log(`http://${host}:${port}`);
 });
 
-app.get('/', (req, res) => {
-    let name = (req.query.name) ? req.query.name : WORLD[default_lang];
-    res.send(`<h1>${HELLO[default_lang]}, ${name}!</h1>`);
+app.get('/hello', (req, res) => { // root directory is already taken by app.use()
+    let lang = (req.params.lang) ? req.params.lang : default_lang;
+    let name = (req.query.name) ? req.query.name : WORLD[lang];
+    res.send(`<h1>${HELLO[lang]}, ${name}!</h1>`);
+});
+
+app.get("/hello/:lang", (req, res) => {
+    let lang = req.params.lang;
+    let name = (req.query.name) ? req.query.name : WORLD[lang];
+    res.send(`${HELLO[lang]}, ${name}!`);
+});
+
+app.get("/hello/:lang/:name", (req, res) => { // "/blog/:category/:id"
+    let lang = req.params.lang;
+    let name = req.params.name;
+    res.send(`${HELLO[lang]}, ${name}!`);
 });
 
 app.get("/api/user", (req, res) => {
@@ -37,16 +53,3 @@ app.get("/api/user", (req, res) => {
     };
     res.json(users);
 });
-
-app.get("/language/:lang/:name", (req, res) => { // "/blog/:category/:id"
-    let lang = req.params.lang;
-    let name = req.params.name;
-    res.send(`${HELLO[lang]}, ${name}!`);
-});
-
-app.get("/language/:lang", (req, res) => {
-    let lang = req.params.lang;
-    let name = (req.query.name) ? req.query.name : WORLD[lang];
-    res.send(`${HELLO[lang]}, ${name}!`);
-});
-
