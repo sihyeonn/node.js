@@ -1,0 +1,43 @@
+<script>
+    // var i is a global variable, let j is a local variable
+    for (var i = 0; i < 10; ++i) ;
+    console.log(i);
+    for (let j = 0; j < 10; ++j) ;
+
+    // const c needs initialization when it is declared
+    const c = 1;
+
+    // primitive type: Number, String, Boolean, undefined, null
+    // reference type: Object, Array
+    const test = new Array();
+    test[0] = 1;
+
+    const myObject = {'a' : 1};
+    myObject.b = 2;
+
+    const arr1 = [1, 2, 3, 4, 5];
+    const arr2 = arr1; // address copy
+    const arr3 = arr1.map(function(item){ // callback
+        return item * 2;
+    });
+
+    const arr4 = [ // array
+        {name: "Si", type: 'A'},
+        {name: "Sa", type: 'A'},
+        {name: "So", type: 'O'} // object
+    ];
+    const arr5 = arr4.filter( function(item) {
+        if (item.type === 'A') return item;
+    });
+
+    for (let i in arr4) { // in: i is index of arr4
+        console.log(i);
+        console.log(arr4[i]);
+    }
+    for (let v of arr4) { // of: v is value of arr4
+        console.log(v);
+    }
+    arr4.forEach(function(v, i, a){ // callback
+        console.log(v, i);
+    });
+</script>
