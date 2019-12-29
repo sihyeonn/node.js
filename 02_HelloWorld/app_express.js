@@ -3,9 +3,13 @@ const app = express();
 const host = '127.0.0.1';
 const port = 3000;
 const default_lang = 'english';
+const bodyParser = require('body-parser'); // Middleware
 
 // Make public directory to client-accessible static directory 
 app.use("/", express.static("./public"));
+// Use middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 const HELLO = {
     'french': 'Bonjour',
@@ -56,4 +60,14 @@ app.get("/api/user", (req, res) => {
 
 app.get("/index", (req, res) => {
     res.sendFile("public/index.html", { root : __dirname });
+});
+
+app.get("/join", (req, res) => {
+    res.sendFile("public/form.html", { root : __dirname });
+});
+
+app.post("/join/submit", (req, res) => {
+    let userid = req.body.userid; // it is possible because of app.use(bodyParser)
+    let userpwd = req.body.userpwd;
+    res.send(`ID: ${userid} AND PASSWORD: ${userpwd}`);
 });
