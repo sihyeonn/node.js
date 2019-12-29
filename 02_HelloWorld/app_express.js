@@ -8,8 +8,8 @@ const bodyParser = require('body-parser'); // Middleware
 // Make public directory to client-accessible static directory 
 app.use("/", express.static("./public"));
 // Use middleware
-app.use(bodyParser.json()); // Json to JS Object :: JSON.parse(str)
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.json()); // Json to JS Object :: JSON.parse(str)
+app.use(express.urlencoded({extended: false}));
 
 const HELLO = {
     'french': 'Bonjour',
