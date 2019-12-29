@@ -53,3 +53,7 @@ app.get("/api/user", (req, res) => {
     };
     res.json(users);
 });
+
+app.get("/index", (req, res) => {
+    res.sendFile("public/index.html", { root : __dirname });
+});
