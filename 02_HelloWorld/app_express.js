@@ -5,6 +5,11 @@ const port = 3000;
 const default_lang = 'english';
 const bodyParser = require('body-parser'); // Middleware
 
+app.locals.pretty = true;
+// view engine setup : pug is not a middleware
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 // Make public directory to client-accessible static directory 
 app.use("/", express.static("./public"));
 // Use middleware
@@ -70,4 +75,12 @@ app.post("/join/submit", (req, res) => {
     let userid = req.body.userid; // it is possible because of app.use(bodyParser)
     let userpwd = req.body.userpwd;
     res.send(`ID: ${userid} AND PASSWORD: ${userpwd}`);
+});
+
+app.get("/pug", (req, res) => {
+    let vals = { 
+        title: "Practice PUG",
+        name: req.query.name || 'TEST'
+    }
+    res.render("form.pug", vals);
 });
