@@ -33,14 +33,14 @@ app.listen(port, () => { // = app.listen(port, host, () => {});
 });
 
 app.get('/hello', (req, res) => { // root directory is already taken by app.use()
-    let lang = (req.params.lang) ? req.params.lang : default_lang;
-    let name = (req.query.name) ? req.query.name : WORLD[lang];
+    let lang = req.params.lang || default_lang;
+    let name = req.query.name || WORLD[lang];
     res.send(`<h1>${HELLO[lang]}, ${name}!</h1>`);
 });
 
 app.get("/hello/:lang", (req, res) => {
     let lang = req.params.lang;
-    let name = (req.query.name) ? req.query.name : WORLD[lang];
+    let name = req.query.name || WORLD[lang];
     res.send(`${HELLO[lang]}, ${name}!`);
 });
 
