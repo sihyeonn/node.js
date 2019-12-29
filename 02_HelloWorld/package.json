@@ -4,7 +4,8 @@
   "description": "Hello World",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "supervisor app_express"
   },
   "author": "sihyeonn",
   "license": "MIT",
@@ -12,6 +13,7 @@
     "express": "^4.17.1",
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "supervisor": "^0.12.0"
   }
 }
