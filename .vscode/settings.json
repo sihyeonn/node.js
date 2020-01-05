@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "askForPassword": true,
+      "database": "node",
+      "dialect": "MySQL",
+      "name": "local",
+      "password": "wkdtlgus",
+      "port": 3306,
+      "server": "localhost",
+      "username": "root"
+    }
+  ]
+}

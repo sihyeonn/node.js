@@ -2,26 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const host = '127.0.0.1';
-
-const mysql = require('mysql');
-const connect = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: 'wkdtlgus',
-  port: 3306,
-  database: 'node',
-  connectionLimit: 10
-});
-/*
-// needs to release useless connections
-const connect = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  port: 3306,
-  database: 'node'
-});
-*/
+const { mysql, connect } = require('./modules/mysql-conn'); // ES6, get returns and declare at the same time
 
 app.listen(port, () => { console.log(`http://${host}:${port}`); });
 
