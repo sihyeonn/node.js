@@ -14,19 +14,22 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.locals.pretty = true;
 
-app.get(['/board', '/board/:page'], (req, res) => {
+app.get(['/board', '/board/:page'], async (req, res) => {
   let page = req.params.page || "list";
   let values = {};
 
   switch(page) {
     case "list":
       values.title = "List";
-      values.list = [
-        {id:1, title: "First one", writer: "Manager", wDate: "2020-01-03", rNum: 5},
-        {id:2, title: "Second one", writer: "Manager2", wDate: "2020-01-04", rNum: 6},
-        {id:3, title: "Third one", writer: "Manager3", wDate: "2020-01-05", rNum: 4}
-      ];
-      res.render("list.pug", values); // in views
+      const connect = await pool.getConnection();
+      try {
+        let query = "SELECT * FROM board ORDER BY id DESC"
+        const result = await connect.query(query);
+        try {
+          values.list = result[0];
+        } catch(err) { sqlErr(err); }
+      } catch(err) { sqlErr(err); }
+      res.render("list.pug", values); // one router can response only once
       break;
     case "write":
       values.title = "Write"
@@ -63,5 +66,17 @@ app.get("/sql_test", async (req, res) => {
     try { res.json(result); }
     catch (err) { sqlErr(err); }
   } catch (err) { sqlErr(err); }
+  connect.release();
+});
+
+app.post("/board/write/save", async (req, res) => {
+  const connect = await pool.getConnection();
+  try {
+    let queryStr = "INSERT INTO board SET title=?, writer=?, wDate=?";
+    let queryVal = [req.body.title, req.body.writer, new Date()];
+    const result = await connect.query(queryStr, queryVal);
+    try { res.redirect("/board/list"); }
+    catch (err) { sqlErr(err); }
+  } catch (err) { sqlErr(err); };
   connect.release();
 });

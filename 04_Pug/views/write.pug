@@ -4,11 +4,18 @@ block title
     h2= title
       small - Board write
 block content
-  form(action="/board", method="post", name="writeForm")
-  .write-wrap
-    table.table.table-bordered
-      tbody
-        tr
-          td Author
-          td
-            input.form-control(type="text", name="writer", placeholder="Author")
+  form(action="/board/write/save", method="post", name="writeForm")
+    .write-wrap
+      table.table.table-bordered
+        tbody
+          tr
+            td Author
+            td
+              input.form-control(type="text", name="writer", placeholder="Author")
+          tr
+            td Title
+            td
+              input.form-control(type="text", name="title", placeholder="Title")
+    div.bts.text-center.my-3
+      button.btn.btn-primary Submit
+      button.btn.btn-danger(type="reset") Clear
