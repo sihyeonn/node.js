@@ -35,7 +35,7 @@
    app.listen(port, () => { console.log(`http://${host}:${port}`); });
 
    // Set express and middle wares
-   app.set('view engine', 'pug'); // Use pug as a view engine this time
+   app.set('view engine', 'pug'); // Use pug as a view engine this time, express has pug
    app.set('views', './views');
 
    // Set static router
