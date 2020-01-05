@@ -1,11 +1,13 @@
-doctype html
-html(lang="en")
-  head
-    title= title 
-    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
-    link(rel="stylesheet" href="/css/board.css") 
-  body
-    div.container-my-2 
-      div.jumbotron
-        h2= title
-          small - Board write
+extends ./layout/board.pug 
+block title
+  div.jumbotron
+    h2= title
+      small - Board write
+block content
+  .write-wrap
+    table.table.table-bordered
+      tbody
+        tr
+          td Author
+          td
+            input.form-control(type="text", name="writer")

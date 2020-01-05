@@ -1,14 +1,16 @@
-doctype html
-html(lang="en")
-  head
-    //- arg.title
-    title= title 
-    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
-    //- root is redirected to public now
-    link(rel="stylesheet" href="/css/board.css") 
-  body
-    //- able to skip div like .container
-    div.container-my-2 
-      div.jumbotron
-        h2= title
-          small - Board List
+extends ./layout/board.pug
+block title
+  div.jumbotron
+    h2= title
+      small - Board List
+block content
+  .list-wrap
+    table.table.table-bordered
+      thead
+        tr
+          th No.
+          th Title
+          th Author
+          th Date
+          th Hits
+      tbody
