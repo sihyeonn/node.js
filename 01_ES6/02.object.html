@@ -83,4 +83,8 @@
         console.log(`${key}: ${value}`)
     }
     console.log(map.get('k'));
+
+    // ES6 :: name and type are global variables
+    const obj = { name: "Sihyeon", type: 'A' };
+    const {name, type} = obj;
 </script>
