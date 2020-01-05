@@ -49,7 +49,7 @@
      // Request from http://host:port/user?id=10
      let queryId = req.query.id; // method:get -> access variables from url
    });
-   app.get("/user:id", (req, res) => {
+   app.get("/user/:id", (req, res) => {
      // Request from http://host:port/user/10
      let paramId = req.params.id; // method:semantic -> access variables from url
    });
