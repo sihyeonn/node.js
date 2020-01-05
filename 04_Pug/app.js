@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const host = '127.0.0.1';
-const { mysql, connect } = require('./modules/mysql-conn'); // ES6, get returns and declare at the same time
+// const { mysql, pool } = require('./modules/mysql-conn'); // ES6, get returns and declare at the same time
+const { pool, sqlErr } = require('./modules/mysql2-conn'); // ES6, get returns and declare at the same time
 
 app.listen(port, () => { console.log(`http://${host}:${port}`); });
 
@@ -37,8 +38,9 @@ app.get(['/board', '/board/:page'], (req, res) => {
   }
 });
 
+/* mysql
 app.get("/sql_test", (req, res) => {
-  connect.getConnection((err, connect) => {
+  pool.getConnection((err, connect) => {
     if (err) {
       res.send("Failed to access DB");
     } else {
@@ -49,4 +51,17 @@ app.get("/sql_test", (req, res) => {
       });
     }
   });
+});
+*/
+app.get("/sql_test", async (req, res) => {
+  const connect = await pool.getConnection(); // promise model
+  try {
+    let queryStr = "INSERT INTO board SET title=?, writer=?, wDate=now()";
+    let queryVal = ["MySQL2 promise test", "manager_2"];
+    const result = await connect.query(queryStr, queryVal);
+    connect.release();
+    try { res.json(result); }
+    catch (err) { sqlErr(err); }
+  } catch (err) { sqlErr(err); }
+  connect.release();
 });

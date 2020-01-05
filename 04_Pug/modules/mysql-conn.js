@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const connect = mysql.createPool({
+const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: 'wkdtlgus',
@@ -20,7 +20,7 @@ const connect = mysql.createConnection({
 
 /*
 ES6
-module.exports = { mysql, connect };
+module.exports = { mysql, pool };
 when variable and value have a same name!
 */
-module.exports = { mysql: mysql, connect: connect }; 
+module.exports = { mysql: mysql, pool: pool }; 
