@@ -3,7 +3,7 @@ const app = express();
 const host = '127.0.0.1';
 const port = 3000;
 const default_lang = 'english';
-const bodyParser = require('body-parser'); // Middleware
+// const bodyParser = require('body-parser'); // Middleware, express has bodyParser after node8(just need express.json())
 
 app.locals.pretty = true;
 // view engine setup : pug is not a middleware
