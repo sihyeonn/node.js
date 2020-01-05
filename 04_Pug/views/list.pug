@@ -1,6 +1,6 @@
 extends ./layout/board.pug
 block title
-  div.jumbotron
+  div.jumbotron.my-2
     h2= title
       small - Board List
 block content
@@ -14,3 +14,10 @@ block content
           th Date
           th Hits
       tbody
+        each l in list
+          tr
+            td= l.id
+            td= l.title
+            td= l.writer
+            td= l.wDate
+            td= l.rNum

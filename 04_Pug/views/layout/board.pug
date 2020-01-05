@@ -2,7 +2,11 @@ doctype html
 html(lang="en")
   include ../inc/head.pug
   body
+    include ../inc/nav.pug
     //- able to skip div like .container
-    div.container-my-2 
+    .container 
       block title
       block content
+
+    include ../inc/footer.pug
+    include ../inc/script.pug
