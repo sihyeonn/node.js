@@ -8,7 +8,7 @@
    ~~~
 4. Create a project folder and move to the folder
 5. Create `app.js`file
-6. Execute below commands to start npm project
+6. Open terminal on vscode(`command + j`) and execute below commands to start npm project
    ~~~bash
    # Install npm project, create `package.json`
    npm init -y
@@ -23,6 +23,7 @@
    npm i -g supervisor nodemon # for development
    npm i -g pm2 # for deployment
    ~~~
+   - Modify `package.json` to develop easy
 7. Write codes on `app.js`
    ~~~js
    const express = require('express');
