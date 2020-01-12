@@ -66,6 +66,7 @@ app.get("/board/view/:id", async (req, res) => {
       res.render('view.pug', values);
     } catch (err) { sqlErr(err); }
   } catch (err) { sqlErr(err); };
+  connect.release();
 });
 
 app.get("/board/delete/:id", async (req, res) => {
@@ -78,6 +79,32 @@ app.get("/board/delete/:id", async (req, res) => {
   } else {
     res.send("Failed to delete");
   }
+  connect.release();
+});
+
+app.get("/board/update/:id", async (req, res) => {
+  const values = { title: "Modify Content" };
+  const id = req.params.id;
+  const queryStr = `SELECT * FROM board WHERE id=${id}`;
+  const connect = await pool.getConnection();
+  const result = await connect.query(queryStr);
+  values.data = result[0][0];
+  res.render("update.pug", values);
+  connect.release();
+});
+
+app.post("/board/update", async (req, res) => {
+  const queryStr = 'UPDATE board SET title=?, content=?, wDate=? WHERE id=?';
+  const queryVal = [req.body.title, req.body.content, new Date()];
+  queryVal.push(req.body.id);
+  const connect = await pool.getConnection();
+  const result = await connect.query(queryStr, queryVal);
+  if (result[0].serverStatus == 2) {
+    res.redirect("/board/list");
+  } else {
+    res.send("Failed to update")
+  }
+  connect.release();
 });
 
 
