@@ -11,6 +11,11 @@ $("#btnDelete").click(function(){
 $("#btnList").click(function(){
   location.href = "/board/list";
 });
+$("#btnReset").click(function(){
+  if (confirm("Are you sure?")) {
+    location.reload();
+  }
+});
 
 function upData() {
   var f = document.updateForm;
