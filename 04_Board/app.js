@@ -14,4 +14,6 @@ app.locals.pretty = true;
 
 /* Router */
 const boardRouter = require("./router/board");
+const apiRouter = require("./router/api");
 app.use("/board", boardRouter);
+app.use("/api", apiRouter);

@@ -36,6 +36,7 @@ router.get(['/', '/:page'], async (req, res) => {
       res.redirect("/"); // public/index.html
       break;
   }
+  connect.release();
 });
 
 router.post("/create", async (req, res) => {

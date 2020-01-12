@@ -42,6 +42,7 @@ app.get(['/board', '/board/:page'], async (req, res) => {
       res.redirect("/"); // public/index.html
       break;
   }
+  connect.release();
 });
 
 app.post("/board/write/save", async (req, res) => {
