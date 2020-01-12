@@ -14,18 +14,34 @@ const { pool, sqlErr } = require('../modules/mysql2-conn');
 */
 router.get(["/get", "/get/:id"], async (req, res) => {
   let sql = '';
+  const values = { title: "API Board" };
   if (req.params.id) sql = `SELECT * FROM board WHERE id=${req.params.id}`;
   else sql = "SELECT * FROM board ORDER BY id DESC";
   const connect = await pool.getConnection();
   const result = await connect.query(sql);
   connect.release();
+  values.data = result[0];
+  res.json(values);
+});
+
+router.post("/post", async (req, res) => { // request from ajax
+  let sql = "INSERT INTO board SET title=?, writer=?, content=?, wDate=?";
+  let sqlVal = [req.body.title, req.body.writer, req.body.content, new Date()];
+  const connect = await pool.getConnection();
+  const result = await connect.query(sql, sqlVal);
+  connect.release();
   res.json(result[0]);
 });
 
-//router.post();
-//
-//router.put();
-//
+//router.put("/put", async (req, res) => { // request from ajax
+//  let sql = "UPDATE board SET title=?, writer=?, content=?, wDate=? WHERE id=?";
+//  let sqlVal = [req.body.title, req.body.writer, req.body.content, new Date(), req.body.id];
+//  const connect = await pool.getConnection();
+//  const result = await connect.query(sql, sqlVal);
+//  connect.release();
+//  res.json(result[0]);
+//});
+
 //router.delete();
 
 module.exports = router;

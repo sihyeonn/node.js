@@ -10,8 +10,27 @@
   <script src="./js/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-  <div class="container">
     <div class="jumbotron">
+      <h2 id="title"></h2>
+    </div>
+    <form name="form1" class="border border-primary p-2">
+      <input type="hidden", name="id", value="">
+      <div class="py-2 form-inline">
+        <span class="d-inline-block", style="width: 100px;">Title: </span>
+        <input type="text" name="title" class="form-control" placeholder="Title">
+      </div>
+      <div class="py-2 form-inline">
+        <span class="d-inline-block", style="width: 100px;">Author: </span>
+        <input type="text" name="writer" class="form-control" placeholder="Writer">
+      </div>
+      <div class="py-2">
+        <textarea name="content" class="form-control" placeholder="Content"></textarea>
+      <div class="text-center py-2">
+        <button class="btn btn-primary" type="button" id="btSave">Save</button>
+        <button class="btn btn-danger" type="reset">Reset</button>
+      </div>
+    </form>
+    <table class="table table-bordered my-3", id="listTb">
       <thead>
         <tr>
           <th>No.</th>
@@ -19,6 +38,7 @@
           <th>Author.</th>
           <th>Date.</th>
           <th>Hits.</th>
+          <th>Action.</th>
         </tr>
       </thead>
       <tbody>
