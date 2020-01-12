@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { pool, sqlErr } = require('../modules/mysql2-conn'); // ES6, get returns and declare at the same time
+const dbName = "board";
 
 /*
   req : /board/update/3
@@ -20,7 +21,7 @@ router.get(['/', '/:page'], async (req, res) => {
       values.title = "List";
       const connect = await pool.getConnection();
       try {
-        let query = "SELECT * FROM board ORDER BY id DESC"
+        let query = `SELECT * FROM ${dbName} ORDER BY id DESC`;
         const result = await connect.query(query);
         try {
           values.list = result[0];
@@ -42,7 +43,7 @@ router.get(['/', '/:page'], async (req, res) => {
 router.post("/create", async (req, res) => {
   const connect = await pool.getConnection();
   try {
-    let queryStr = "INSERT INTO board SET title=?, writer=?, wDate=?, content=?";
+    let queryStr = `INSERT INTO ${dbName} SET title=?, writer=?, wDate=?, content=?`;
     let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content];
     const result = await connect.query(queryStr, queryVal);
     try { res.redirect("/board/list"); }
@@ -55,7 +56,7 @@ router.get("/view/:id", async (req, res) => {
   const connect = await pool.getConnection();
   try {
     let id = req.params.id;
-    let queryStr = `SELECT * FROM board WHERE id=${id}`;
+    let queryStr = `SELECT * FROM ${dbName} WHERE id=${id}`;
     const result = await connect.query(queryStr);
     try {
       let values = {};
@@ -69,7 +70,7 @@ router.get("/view/:id", async (req, res) => {
 
 router.get("/delete/:id", async (req, res) => {
   let id = req.params.id;
-  let queryStr = "DELETE FROM board WHERE id="+id;
+  let queryStr = `DELETE FROM ${dbName} WHERE id=${id}`;
   const connect = await pool.getConnection();
   const result = await connect.query(queryStr);
   if (result[0].affectedRows == 1) {
@@ -83,7 +84,7 @@ router.get("/delete/:id", async (req, res) => {
 router.get("/update/:id", async (req, res) => {
   const values = { title: "Modify Content" };
   const id = req.params.id;
-  const queryStr = `SELECT * FROM board WHERE id=${id}`;
+  const queryStr = `SELECT * FROM ${dbName} WHERE id=${id}`;
   const connect = await pool.getConnection();
   const result = await connect.query(queryStr);
   values.data = result[0][0];
@@ -92,7 +93,7 @@ router.get("/update/:id", async (req, res) => {
 });
 
 router.post("/update", async (req, res) => {
-  const queryStr = 'UPDATE board SET title=?, content=?, wDate=? WHERE id=?';
+  const queryStr = `UPDATE ${dbName} SET title=?, content=?, wDate=? WHERE id=?`;
   const queryVal = [req.body.title, req.body.content, new Date()];
   queryVal.push(req.body.id);
   const connect = await pool.getConnection();

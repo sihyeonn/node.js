@@ -26,7 +26,7 @@ app.get(['/board', '/board/:page'], async (req, res) => {
       values.title = "List";
       const connect = await pool.getConnection();
       try {
-        let query = "SELECT * FROM board ORDER BY id DESC"
+        let query = "SELECT * FROM board ORDER BY id DESC";
         const result = await connect.query(query);
         try {
           values.list = result[0];
