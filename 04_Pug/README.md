@@ -22,3 +22,17 @@ SELECT (id, title, writer, wDate, rNum) FROM board ORDER BY id DESC;
 SELECT * FROM board WHERE id=7;
 SELECT id FROM board WHERE title LIKE '%welcome%';
 ~~~
+
+## Delete
+~~~sql
+-- DANGER!!!!!!!!!!!!!!!!!!! without WHERE!!!! LIKE DELETE FROM [table_name];
+-- Use DELETE with WHERE always for data-safety
+-- DELETE FROM [table_name] key1=val1;
+DELETE FROM board WHERE id=4;
+~~~
+
+## Update
+~~~ sql
+-- DANGER!!!!!!!!!!!!!!!!!!! without WHERE!!!! LIKE UPDATE FROM [table_name];
+-- Use UPDATE with WHERE always for data-safety
+~~~

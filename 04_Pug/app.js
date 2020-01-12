@@ -54,7 +54,7 @@ app.post("/board/write/save", async (req, res) => {
 });
 
 app.get("/board/view/:id", async (req, res) => {
-  let connect = await pool.getConnection();
+  const connect = await pool.getConnection();
   try {
     let id = req.params.id;
     let queryStr = `SELECT * FROM board WHERE id=${id}`;
@@ -66,6 +66,18 @@ app.get("/board/view/:id", async (req, res) => {
       res.render('view.pug', values);
     } catch (err) { sqlErr(err); }
   } catch (err) { sqlErr(err); };
+});
+
+app.get("/board/delete/:id", async (req, res) => {
+  let id = req.params.id;
+  let queryStr = "DELETE FROM board WHERE id="+id;
+  const connect = await pool.getConnection();
+  const result = await connect.query(queryStr);
+  if (result[0].affectedRows == 1) {
+    res.redirect("/board/list");
+  } else {
+    res.send("Failed to delete");
+  }
 });
 
 

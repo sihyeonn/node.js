@@ -1,13 +1,28 @@
 // front with jquery
 // IE can not understand backtick template
-$("#btUpdate").click(function(){
+$("#btnUpdate").click(function(){
   location.href = "/board/update/" + $(this).data("id");
 });
-$("#btDelete").click(function(){
+$("#btnDelete").click(function(){
   if (confirm("Are you sure?")) {
     location.href = "/board/delete/" + $(this).data("id");
   }
 });
-$("#btList").click(function(){
+$("#btnList").click(function(){
   location.href = "/board/list";
 });
+
+function upData() {
+  var f = document.updateForm;
+  if (f.title.value == "") {
+    alert("Input title.");
+    f.title.focus();
+    return false; // for not to submit
+  }
+  if (f.content.value == "") {
+    alert("Input Content.");
+    f.content.focus();
+    return false; // for not to submit
+  }
+  return true;
+}
