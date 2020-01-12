@@ -21,6 +21,7 @@ $('#btSave').click(function(){
     type = "PUT"; // update 
     url = "/api/put";
   }
+  console.log(url);
   $.ajax({
     url: url,
     type: type,
@@ -66,7 +67,7 @@ function makeList(res) {
   for (var i in res.data) {
     html += '<tr>';
     html += '<td>'+res.data[i].id+'</td>';
-    html += '<td>'+res.data[i].title+'</td>';
+    html += "<td onclick='getData("+res.data[i].id+");'>"+res.data[i].title+"</td>";
     html += '<td>'+res.data[i].writer+'</td>';
     html += '<td>'+res.data[i].wDate+'</td>';
     html += '<td>'+res.data[i].rNum+'</td>';
@@ -77,7 +78,13 @@ function makeList(res) {
 }
 
 function viewList(res) {
-  console.log(res);
+  var f = document.form1;
+  var d = res.data[0];
+  console.log(f.id.value);
+  f.id.value = d.id;
+  f.title.value = d.title;
+  f.writer.value = d.writer;
+  f.content.value = d.content;
 }
 
 getData();

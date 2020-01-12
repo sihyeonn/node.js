@@ -33,14 +33,14 @@ router.post("/post", async (req, res) => { // request from ajax
   res.json(result[0]);
 });
 
-//router.put("/put", async (req, res) => { // request from ajax
-//  let sql = "UPDATE board SET title=?, writer=?, content=?, wDate=? WHERE id=?";
-//  let sqlVal = [req.body.title, req.body.writer, req.body.content, new Date(), req.body.id];
-//  const connect = await pool.getConnection();
-//  const result = await connect.query(sql, sqlVal);
-//  connect.release();
-//  res.json(result[0]);
-//});
+router.put("/put", async (req, res) => { // request from ajax
+  let sql = "UPDATE board SET title=?, writer=?, content=?, wDate=? WHERE id=?";
+  let sqlVal = [req.body.title, req.body.writer, req.body.content, new Date(), req.body.id];
+  const connect = await pool.getConnection();
+  const result = await connect.query(sql, sqlVal);
+  connect.release();
+  res.json(result[0]);
+});
 
 router.delete("/delete", async (req, res) => {
   let sql = `DELETE FROM board WHERE id=${req.body.id}`;
