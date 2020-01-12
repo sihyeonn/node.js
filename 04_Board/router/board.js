@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const { mysql, pool } = require('./modules/mysql-conn'); // ES6, get returns and declare at the same time
 const { pool, sqlErr } = require('../modules/mysql2-conn'); // ES6, get returns and declare at the same time
 
 /*

@@ -11,6 +11,9 @@ $("#btnDelete").click(function(){
 $("#btnList").click(function(){
   location.href = "/board/list";
 });
+$("#btnReset").click(function(){
+  location.reload();
+});
 
 function upData() {
   var f = document.updateForm;
