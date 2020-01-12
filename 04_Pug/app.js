@@ -72,8 +72,8 @@ app.get("/sql_test", async (req, res) => {
 app.post("/board/write/save", async (req, res) => {
   const connect = await pool.getConnection();
   try {
-    let queryStr = "INSERT INTO board SET title=?, writer=?, wDate=?";
-    let queryVal = [req.body.title, req.body.writer, new Date()];
+    let queryStr = "INSERT INTO board SET title=?, writer=?, wDate=?, content=?";
+    let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content];
     const result = await connect.query(queryStr, queryVal);
     try { res.redirect("/board/list"); }
     catch (err) { sqlErr(err); }
