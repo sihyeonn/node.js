@@ -41,6 +41,34 @@ app.get(['/board', '/board/:page'], async (req, res) => {
   }
 });
 
+app.post("/board/write/save", async (req, res) => {
+  const connect = await pool.getConnection();
+  try {
+    let queryStr = "INSERT INTO board SET title=?, writer=?, wDate=?, content=?";
+    let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content];
+    const result = await connect.query(queryStr, queryVal);
+    try { res.redirect("/board/list"); }
+    catch (err) { sqlErr(err); }
+  } catch (err) { sqlErr(err); };
+  connect.release();
+});
+
+app.get("/board/view/:id", async (req, res) => {
+  let connect = await pool.getConnection();
+  try {
+    let id = req.params.id;
+    let queryStr = `SELECT * FROM board WHERE id=${id}`;
+    const result = await connect.query(queryStr);
+    try {
+      let values = {};
+      values.title = 'Content';
+      values.data = result[0][0];
+      res.render('view.pug', values);
+    } catch (err) { sqlErr(err); }
+  } catch (err) { sqlErr(err); };
+});
+
+
 /* mysql
 app.get("/sql_test", (req, res) => {
   pool.getConnection((err, connect) => {
@@ -66,17 +94,5 @@ app.get("/sql_test", async (req, res) => {
     try { res.json(result); }
     catch (err) { sqlErr(err); }
   } catch (err) { sqlErr(err); }
-  connect.release();
-});
-
-app.post("/board/write/save", async (req, res) => {
-  const connect = await pool.getConnection();
-  try {
-    let queryStr = "INSERT INTO board SET title=?, writer=?, wDate=?, content=?";
-    let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content];
-    const result = await connect.query(queryStr, queryVal);
-    try { res.redirect("/board/list"); }
-    catch (err) { sqlErr(err); }
-  } catch (err) { sqlErr(err); };
   connect.release();
 });

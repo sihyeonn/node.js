@@ -17,7 +17,8 @@ block content
         each l in list
           tr
             td= l.id
-            td= l.title
+            td 
+              a(href=`/board/view/${l.id}`)= l.title
             td= l.writer
             td= l.wDate
             td= l.rNum
