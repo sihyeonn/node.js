@@ -1,0 +1,14 @@
+extends ./layout/board.pug
+block title
+  div.jumbotron.my-2
+    h2= title
+      small - View Content
+block content
+  .border.border-primary.rounded.p-3
+    b= data.title
+  .border.border-primary.rounded.p-3.my-3= data.wDate
+  .border.border-primary.rounded.p-3.my-3= data.content
+  .p-3.text-center
+    button.btn.btn-primary#btnUpdate(data-id=`${data.id}`) Modify
+    button.btn.btn-danger#btnDelete(data-id=`${data.id}`) Delete
+    button.btn.btn-success#btnList List

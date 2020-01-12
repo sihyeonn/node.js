@@ -1,0 +1,24 @@
+extends ./layout/board.pug
+block title
+  div.jumbotron.my-2
+    h2= title
+      small - Board List
+block content
+  .list-wrap
+    table.table.table-bordered
+      thead
+        tr
+          th No.
+          th Title
+          th Author
+          th Date
+          th Hits
+      tbody
+        each l in list
+          tr
+            td= l.id
+            td 
+              a(href=`/board/view/${l.id}`)= l.title
+            td= l.writer
+            td= l.wDate
+            td= l.rNum

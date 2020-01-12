@@ -1,0 +1,16 @@
+extends ./layout/board.pug
+block title
+  .jumbotron.my-2
+    h2= title
+      small - Modify Content
+block content
+  form(method="post", name="updateForm", action="/board/update", onsubmit="return upData();")
+    input(type="hidden", name="id", value=`${data.id}`)
+    .p-3
+      input.form-control(type="text", name="title", value=`${data.title}`)
+    .p-3.my-3
+      textarea.form-control(name="content", value)= data.content
+    .p-3.text-center
+      button.btn.btn-primary#btnSave Submit
+      button.btn.btn-danger#btnSubmit(type="reset") Reset
+      button.btn.btn-success#btnList(type="button") List
