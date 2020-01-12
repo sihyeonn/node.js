@@ -42,6 +42,12 @@ router.post("/post", async (req, res) => { // request from ajax
 //  res.json(result[0]);
 //});
 
-//router.delete();
+router.delete("/delete", async (req, res) => {
+  let sql = `DELETE FROM board WHERE id=${req.body.id}`;
+  const connect = await pool.getConnection();
+  const result = await connect.query(sql);
+  connect.release();
+  res.json(result[0]);
+});
 
 module.exports = router;

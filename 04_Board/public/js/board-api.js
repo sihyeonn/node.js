@@ -1,3 +1,18 @@
+function delList(id) {
+  $.ajax({
+    url: '/api/delete',
+    type: 'DELETE',
+    dataType: 'json',
+    data: {id: id},
+    success: function(res) {
+      getData();
+    },
+    error: function(xhr) {
+      console.log(xhr);
+    }
+  });
+}
+
 $('#btSave').click(function(){
   var id = document.form1.id.value;
   var type = "POST"; // create
@@ -55,7 +70,7 @@ function makeList(res) {
     html += '<td>'+res.data[i].writer+'</td>';
     html += '<td>'+res.data[i].wDate+'</td>';
     html += '<td>'+res.data[i].rNum+'</td>';
-    html += "<td><button class='btn-sm btn-danger' data-id='"+res.data[i].id+"'>Delete</button></td>";
+    html += "<td><button class='btn-sm btn-danger' onclick='delList("+res.data[i].id+")'>Delete</button></td>";
     html += '</tr>';
   }
   $("#listTb > tbody").html(html);

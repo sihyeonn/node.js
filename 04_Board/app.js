@@ -1,4 +1,5 @@
 const express = require('express');
+const methodOverride = require('method-override');
 const app = express();
 const port = 3000;
 const host = '127.0.0.1';
@@ -11,6 +12,15 @@ app.use('/', express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.locals.pretty = true;
+// Below lines are not necessary for ajax, but they are needed when form requests PUT or DELETE
+app.use(methodOverride((req, res) => {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    let method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
+
 
 /* Router */
 const boardRouter = require("./router/board");
