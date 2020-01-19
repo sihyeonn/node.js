@@ -8,6 +8,12 @@ block content
     b= data.title
   .border.border-primary.rounded.p-3.my-3= data.wDate
   .border.border-primary.rounded.p-3.my-3= data.content
+  if data.fileTypeChk == 'img'
+    .border.border-primary.rounded.p-3.my-3
+      img.mw-100(src=`${data.filePath}`)
+  else if data.fileTypeChk == 'file'
+    .border.border-primary.rounded.p-3.my-3
+      a(href=`/board/download/${data.id}`)= data.orgFile
   .p-3.text-center
     button.btn.btn-primary#btnUpdate(data-id=`${data.id}`) Modify
     button.btn.btn-danger#btnDelete(data-id=`${data.id}`) Delete

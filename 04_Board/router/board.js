@@ -52,7 +52,7 @@ router.post("/create", upload.single("upFile"), async (req, res) => {
     let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content];
     if (req.file || req.fileUploadChk) {
       queryStr += ', orgFile=?, realFile=?';
-      queryVal += [req.file.originalname, req.file.filename];
+      queryVal.push(req.file.originalname, req.file.filename);
     }
     const result = await connect.query(queryStr, queryVal);
     try { res.redirect("/board/list"); }
@@ -71,6 +71,13 @@ router.get("/view/:id", async (req, res) => {
       let values = {};
       values.title = 'Content';
       values.data = result[0][0];
+      if (values.data.realFile) {
+        let imgExt = ['.jpg', '.jpeg', '.png', '.gif'];
+        let ext = path.extname(values.data.realFile).toLocaleLowerCase();
+        values.data.fileTypeChk = (-1 < imgExt.indexOf(ext)) ? 'img' : 'file';
+        let subDir = values.data.realFile.split('-')[0];
+        values.data.filePath = "/uploads/"+subDir+"/"+values.data.realFile;
+      }
       res.render('view.pug', values);
       queryStr = `UPDATE ${dbName} SET rNum = rNum + 1 WHERE id=${id}`;
       result = await connect.query(queryStr);
@@ -115,6 +122,10 @@ router.post("/update", async (req, res) => {
     res.send("Failed to update")
   }
   connect.release();
+});
+
+router.get("/download/:id", (req, res) => {
+
 });
 
 function aPath(cPath) {
