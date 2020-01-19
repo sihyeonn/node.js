@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const dateTime = require('date-time');
 const router = express.Router();
 const { pool, sqlErr } = require(aPath('../modules/mysql2-conn')); // ES6, get returns and declare at the same time
 const { upload } = require(aPath('../modules/multer-conn'));
@@ -28,6 +29,7 @@ router.get(['/', '/:page'], async (req, res) => {
         try {
           for (let v of result[0]) {
             v.fileIcon = v.realFile ? true : false;
+            v.wDate = dateTime(v.wDate);
           }
           values.list = result[0];
         } catch(err) { sqlErr(err); }
