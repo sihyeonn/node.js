@@ -28,8 +28,10 @@ app.use(methodOverride((req, res) => {
 /* Router */
 const boardRouter = require(aPath("./router/board"));
 const apiRouter = require(aPath("./router/api"));
+const userRouter = require(aPath("./router/user"));
 app.use("/board", boardRouter);
 app.use("/api", apiRouter);
+app.use("/user", userRouter);
 
 function aPath(cPath) {
   return path.join(__dirname, cPath);
