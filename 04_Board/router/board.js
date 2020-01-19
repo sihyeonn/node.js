@@ -28,6 +28,7 @@ router.get(['/', '/:page'], async (req, res) => {
         } catch(err) { sqlErr(err); }
       } catch(err) { sqlErr(err); }
       res.render("list.pug", values); // one router can response only once
+      connect.release();
       break;
     case "write":
       values.title = "Write"
@@ -37,7 +38,6 @@ router.get(['/', '/:page'], async (req, res) => {
       res.redirect("/"); // public/index.html
       break;
   }
-  connect.release();
 });
 
 router.post("/create", async (req, res) => {
@@ -57,12 +57,14 @@ router.get("/view/:id", async (req, res) => {
   try {
     let id = req.params.id;
     let queryStr = `SELECT * FROM ${dbName} WHERE id=${id}`;
-    const result = await connect.query(queryStr);
+    let result = await connect.query(queryStr);
     try {
       let values = {};
       values.title = 'Content';
       values.data = result[0][0];
       res.render('view.pug', values);
+      queryStr = `UPDATE ${dbName} SET rNum = rNum + 1 WHERE id=${id}`;
+      result = await connect.query(queryStr);
     } catch (err) { sqlErr(err); }
   } catch (err) { sqlErr(err); };
   connect.release();
