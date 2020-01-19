@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "supervisor ./bin/www",
+    "dev": "PORT=3333 NODE_ENV=development supervisor ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
