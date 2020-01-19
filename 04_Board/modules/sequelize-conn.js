@@ -10,6 +10,6 @@ const sequelize = new Sequelize({ // Instance
 });
 
 // Immediately-invoked Function Expressions (IIFE)
-(async () => (await sequelize.authenticate()))();
+//(async () => (await sequelize.authenticate()))();
 
 module.exports = {sequelize, Sequelize};
