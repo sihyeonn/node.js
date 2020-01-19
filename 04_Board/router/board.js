@@ -29,7 +29,7 @@ router.get(['/', '/:page'], async (req, res) => {
         try {
           for (let v of result[0]) {
             v.fileIcon = v.realFile ? true : false;
-            v.wDate = dateTime(v.wDate);
+            v.wDate = dateTime({date: v.wDate});
           }
           values.list = result[0];
         } catch(err) { sqlErr(err); }
