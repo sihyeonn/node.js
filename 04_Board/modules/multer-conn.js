@@ -7,12 +7,19 @@ const destination = (req, file, cb) => {
   cb(null, getPath());
 };
 
+const extChk = (req, file, cb) => {
+  let allowExt = ['.jpg', '.jpeg', '.gif', '.png', '.zip', '.txt', '.pdf'];
+  let ext = path.extname(file.originalname).toLocaleLowerCase();
+  req.fileUploadChk = (allowExt.indexOf(ext) !== -1); // append with new key
+  cb(null, req.fileUploadChk);
+};
+
 // same as 'const storage = multer.diskStorage({destination, filename}) in ES6 if (key === value)'
 const storage = multer.diskStorage({ // js object style
   destination: destination,
   filename: filename
 });
-const upload = multer({storage: storage});
+const upload = multer({storage, fileFilter: extChk});
 
 // Function declaration
 function filename(req, file, cb) {

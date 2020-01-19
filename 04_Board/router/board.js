@@ -45,8 +45,12 @@ router.get(['/', '/:page'], async (req, res) => {
 router.post("/create", upload.single("upFile"), async (req, res) => {
   const connect = await pool.getConnection();
   try {
-    let queryStr = `INSERT INTO ${dbName} SET title=?, writer=?, wDate=?, content=?, orgFile=?, realFile=?`;
-    let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content, req.file.originalname, req.file.filename];
+    let queryStr = `INSERT INTO ${dbName} SET title=?, writer=?, wDate=?, content=?`;
+    let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content];
+    if (req.fileUploadChk) {
+      queryStr += ', orgFile=?, realFile=?';
+      queryVal += [req.file.originalname, req.file.filename];
+    }
     const result = await connect.query(queryStr, queryVal);
     try { res.redirect("/board/list"); }
     catch (err) { sqlErr(err); }
