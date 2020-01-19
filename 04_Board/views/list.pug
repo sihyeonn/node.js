@@ -19,6 +19,8 @@ block content
             td= l.id
             td 
               a(href=`/board/view/${l.id}`)= l.title
+              if l.fileIcon
+                i.fa.fa-file.ml-3
             td= l.writer
             td= l.wDate
             td= l.rNum

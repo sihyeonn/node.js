@@ -26,6 +26,9 @@ router.get(['/', '/:page'], async (req, res) => {
         let query = `SELECT * FROM ${dbName} ORDER BY id DESC`;
         const result = await connect.query(query);
         try {
+          for (let v of result[0]) {
+            v.fileIcon = v.realFile ? true : false;
+          }
           values.list = result[0];
         } catch(err) { sqlErr(err); }
       } catch(err) { sqlErr(err); }
@@ -47,7 +50,7 @@ router.post("/create", upload.single("upFile"), async (req, res) => {
   try {
     let queryStr = `INSERT INTO ${dbName} SET title=?, writer=?, wDate=?, content=?`;
     let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content];
-    if (req.fileUploadChk) {
+    if (req.file || req.fileUploadChk) {
       queryStr += ', orgFile=?, realFile=?';
       queryVal += [req.file.originalname, req.file.filename];
     }
