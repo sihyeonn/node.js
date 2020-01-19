@@ -12,4 +12,11 @@ router.get('/create', async (req, res) => {
   res.json(result);
 });
 
+router.get("/get", async (req, res) => {
+  let result = await User.findAll({
+    order: [["id", "desc"], ["age", "asc"]]
+  });
+  res.json(result);
+});
+
 module.exports = router;
