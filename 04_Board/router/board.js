@@ -1,6 +1,8 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
-const { pool, sqlErr } = require('../modules/mysql2-conn'); // ES6, get returns and declare at the same time
+const { pool, sqlErr } = require(aPath('../modules/mysql2-conn')); // ES6, get returns and declare at the same time
+const { upload } = require(aPath('../modules/multer-conn'));
 const dbName = "board";
 
 /*
@@ -40,11 +42,11 @@ router.get(['/', '/:page'], async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", upload.single("upFile"), async (req, res) => {
   const connect = await pool.getConnection();
   try {
-    let queryStr = `INSERT INTO ${dbName} SET title=?, writer=?, wDate=?, content=?`;
-    let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content];
+    let queryStr = `INSERT INTO ${dbName} SET title=?, writer=?, wDate=?, content=?, orgFile=?, realFile=?`;
+    let queryVal = [req.body.title, req.body.writer, new Date(), req.body.content, req.file.originalname, req.file.filename];
     const result = await connect.query(queryStr, queryVal);
     try { res.redirect("/board/list"); }
     catch (err) { sqlErr(err); }
@@ -107,5 +109,9 @@ router.post("/update", async (req, res) => {
   }
   connect.release();
 });
+
+function aPath(cPath) {
+  return path.join(__dirname, cPath);
+}
 
 module.exports = router;
