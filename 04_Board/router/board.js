@@ -75,8 +75,10 @@ router.get("/view/:id", async (req, res) => {
         let imgExt = ['.jpg', '.jpeg', '.png', '.gif'];
         let ext = path.extname(values.data.realFile).toLocaleLowerCase();
         values.data.fileTypeChk = (-1 < imgExt.indexOf(ext)) ? 'img' : 'file';
-        let subDir = values.data.realFile.split('-')[0];
-        values.data.filePath = "/uploads/"+subDir+"/"+values.data.realFile;
+        if (values.data.fileTypeChk === 'img') {
+          let subDir = values.data.realFile.split('-')[0];
+          values.data.filePath = "/uploads/"+subDir+"/"+values.data.realFile;
+        }
       }
       res.render('view.pug', values);
       queryStr = `UPDATE ${dbName} SET rNum = rNum + 1 WHERE id=${id}`;
@@ -124,8 +126,14 @@ router.post("/update", async (req, res) => {
   connect.release();
 });
 
-router.get("/download/:id", (req, res) => {
-
+router.get("/download/:id", async (req, res) => {
+  const queryStr = `SELECT orgFile, realFile FROM ${dbName} WHERE id=${req.params.id}`;
+  const connect = await pool.getConnection();
+  const result = await connect.query(queryStr);
+  let filePath = aPath(`../uploads/${result[0][0].realFile.split('-')[0]}`);
+  let file = filePath + "/" + result[0][0].realFile;
+  res.download(file, result[0][0].orgFile);
+  connect.release();
 });
 
 function aPath(cPath) {

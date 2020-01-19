@@ -53,7 +53,7 @@ function getFilename(orgFile) {
   let time = Date.now(); // timestamp
   let uniq = Math.floor(Math.random() * 90) + Math.floor(Math.random() * 10);
 
-  return `${dir}-${time}-${uniq}`;
+  return `${dir}-${time}-${uniq}${ext}`;
 }
 
 module.exports = {upload};
