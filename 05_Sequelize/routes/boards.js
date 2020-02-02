@@ -29,21 +29,26 @@ router.post('/wr', async function(req, res, next) {
   const data = await Board.create({
     title: req.body.title,
     comment: req.body.comment,
-    writer: req.body.writer,
-    rNum: 0
+    writer: req.body.writer
   });
   res.redirect('/board');
 });
 
-router.delete('/delete', async (req, res, next) => {
+router.get('/delete/:id', async (req, res, next) => {
   await Board.destroy({
-    where: { id: req.body.id }
+    where: { id: req.params.id }
   });
   res.redirect('/board');
 });
 
-router.put('/update', async (req, res, next) => {
-  res.send("here");
+router.put('/update', (req, res, next) => {
+  Board.update({
+    title: req.body.title,
+    comment: req.body.comment,
+    writer: req.body.writer
+  }, {
+    where: { id: req.body.id }
+  }).then( res.redirect('/board') );
 });
 
 module.exports = router;
