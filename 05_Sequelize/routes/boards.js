@@ -5,9 +5,12 @@ var {Board} = require('../models');
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
-  const rows = await Board.findAll({ order: [["id", "desc"]], raw: true });
-  rows.forEach(row => row.createdAt = dateTime({date: row.createdAt}));
-  res.render('board-list.pug', { rows });
+  try {
+    const rows = await Board.findAll({ order: [["id", "desc"]], raw: true });
+    rows.forEach(row => row.createdAt = dateTime({date: row.createdAt}));
+    res.render('board-list.pug', { rows });
+  }
+  catch(e) { next(e); }
 });
 
 router.get('/write', async (req, res, next) => {
@@ -20,6 +23,13 @@ router.post('/wr', async function(req, res, next) {
     comment: req.body.comment,
     writer: req.body.writer,
     rNum: 0
+  });
+  res.redirect('/board');
+});
+
+router.get('/delete/:id', async (req, res, next) => {
+  await Board.destroy({
+    where: { id: req.params.id }
   });
   res.redirect('/board');
 });
