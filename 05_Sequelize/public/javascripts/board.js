@@ -22,7 +22,11 @@ function onChange(id) {
 /*
 async function onChange(id) {
   try {
-    const response = await axios.get(`/board/${id}`);
+    const res = await axios.get(`/board/${id}`);
+    document.querySelector('#id').value = res.data.id;
+    document.querySelector('#title').value = res.data.title;
+    document.querySelector('#comment').value = res.data.comment;
+    document.querySelector('#writer').value = res.data.writer;
   } catch(e) {
     next
   }
