@@ -13,7 +13,7 @@
    ~~~
 ### 3. Install and init sequelize for db
    ~~~bash
-    npm i -g sequelize-cli # if you need
+    npm i -g sequelize-cli mysql2 # if you need
     npm i sequelize mysql2
     sequelize init
    ~~~
