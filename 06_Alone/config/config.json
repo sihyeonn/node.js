@@ -1,11 +1,11 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "port": 3306,
+    "operatorsAliases": false,
+    "use_env_variable": true,
+    "pool": { "max": 10, "min": 0 }
   },
   "test": {
     "username": "root",
