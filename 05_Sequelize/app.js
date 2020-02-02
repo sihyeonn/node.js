@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var fs = require('fs')
+var rfs = require('rotating-file-stream')
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -10,16 +11,26 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+var logDirectory = path.join(__dirname, 'log')
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-
-// create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+// ensure log directory exists
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+ 
+// create a rotating write stream
+var accessLogStream = rfs.createStream("access.log", {
+  size: "10M", // rotate every 10 MegaBytes written
+  interval: "1d", // rotate daily
+  compress: "gzip", // compress rotated files
+  path: logDirectory
+});
  
 // setup the logger
 app.use(logger('combined', { stream: accessLogStream }))
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
