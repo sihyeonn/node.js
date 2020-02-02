@@ -1,0 +1,16 @@
+extends layout.pug
+block content
+  table.table.table-bordered
+    thead.thead-dark
+      tr
+        th No.
+        th Title.
+        th Writer.
+        th Date.
+    tbody
+      each row in rows
+        tr
+          td= row.id
+          td= row.title
+          td= row.writer
+          td= row.createdAt
