@@ -11,7 +11,7 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 var {sequelize, Sequelize} = require('./models')
-sequelize.sync({forced: false});
+sequelize.sync({force: false});
 
 var logDirectory = path.join(__dirname, 'log')
 
