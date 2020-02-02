@@ -1,5 +1,14 @@
 extends layout.pug
 block content
+  .p-2.border
+    form(action="/board/update", method="post")
+      input(type="hidden" name="_method" value="put")
+      input(type="hidden" name="id" id="id")
+      .p-2.form-inline
+        input.form-control.mr-2(type="text" id="title" name="title" placeholder="Title")
+        input.form-control.mr-2(type="text" id="writer" name="writer" placeholder="Author")
+        input.form-control.mr-2(type="text" id="comment" name="comment" placeholder="Comment")
+        button.btn.btn-primary Save
   table.table.table-bordered
     thead.thead-dark
       tr
@@ -17,3 +26,4 @@ block content
           td= row.createdAt
           td
             button.btn.btn-sm.btn-danger(onclick=`location.href='/board/delete/${row.id}'`) Delete
+            button.btn.btn-sm.btn-success(onclick=`onChange(${row.id})`) Modify

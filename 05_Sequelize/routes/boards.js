@@ -13,6 +13,14 @@ router.get('/', async function(req, res, next) {
   catch(e) { next(e); }
 });
 
+router.get('/get/:id', async function(req, res, next) {
+  try {
+    const row = await Board.findOne({ where: { id: req.params.id }, raw: true });
+    res.json(row);
+  }
+  catch(e) { next(e); }
+});
+
 router.get('/write', async (req, res, next) => {
   res.render('board-write.pug');
 });
@@ -27,11 +35,15 @@ router.post('/wr', async function(req, res, next) {
   res.redirect('/board');
 });
 
-router.get('/delete/:id', async (req, res, next) => {
+router.delete('/delete', async (req, res, next) => {
   await Board.destroy({
-    where: { id: req.params.id }
+    where: { id: req.body.id }
   });
   res.redirect('/board');
+});
+
+router.put('/update', async (req, res, next) => {
+  res.send("here");
 });
 
 module.exports = router;
