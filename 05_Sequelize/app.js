@@ -13,7 +13,7 @@ var boardsRouter = require('./routes/boards');
 
 var app = express();
 var {sequelize, Sequelize} = require('./models')
-sequelize.sync({force: false});
+sequelize.sync({force: true});
 
 var logDirectory = path.join(__dirname, 'log')
 

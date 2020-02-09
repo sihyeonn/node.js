@@ -31,6 +31,9 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+db.Member.hasMany(db.Post); // Member can have many posts
+db.Post.belongsTo(db.Member);
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
