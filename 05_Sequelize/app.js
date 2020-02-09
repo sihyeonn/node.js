@@ -13,7 +13,7 @@ var boardsRouter = require('./routes/boards');
 
 var app = express();
 var {sequelize, Sequelize} = require('./models')
-sequelize.sync({force: true});
+sequelize.sync({force: false});
 
 var logDirectory = path.join(__dirname, 'log')
 
@@ -39,7 +39,6 @@ app.use(logger('combined', { stream: accessLogStream }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // NOTE: when using req.body, you must fully parse the request body
 //       before you call methodOverride() in your middleware stack,
@@ -53,6 +52,7 @@ app.use(methodOverride(function (req, res) {
   }
 }))
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/board', boardsRouter);
