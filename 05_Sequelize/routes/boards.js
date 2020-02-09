@@ -26,19 +26,23 @@ router.get('/write', async (req, res, next) => {
 });
 
 router.post('/wr', async function(req, res, next) {
-  const data = await Board.create({
-    title: req.body.title,
-    comment: req.body.comment,
-    writer: req.body.writer
-  });
-  res.redirect('/board');
+  try {
+    const data = await Board.create({
+      title: req.body.title,
+      comment: req.body.comment,
+      writer: req.body.writer
+    });
+    res.redirect('/board');
+  } catch (e) { next(e); }
 });
 
 router.get('/delete/:id', async (req, res, next) => {
-  await Board.destroy({
-    where: { id: req.params.id }
-  });
-  res.redirect('/board');
+  try {
+    await Board.destroy({
+      where: { id: req.params.id }
+    });
+    res.redirect('/board');
+  } catch (e) { next(e); }
 });
 
 router.put('/update', (req, res, next) => {
@@ -48,7 +52,8 @@ router.put('/update', (req, res, next) => {
     writer: req.body.writer
   }, {
     where: { id: req.body.id }
-  }).then( res.redirect('/board') );
+  }).then( data => { if (data[0] == 1) res.redirect('/board'); } )
+    .catch(e => next(e));
 });
 
 module.exports = router;

@@ -17,6 +17,7 @@ sequelize.sync({force: false});
 
 var logDirectory = path.join(__dirname, 'log')
 
+app.locals.pretty = true;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
