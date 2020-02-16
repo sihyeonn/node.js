@@ -29,13 +29,15 @@ const crawler = async () => {
 };
 crawler();
 
-// puppeteer
+// puppeteer - browser macro
 const puppeteer = require('puppeteer');
 const crawler2 = async () => {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage(); // new tab
   await page.goto(rs2[0].link);
   await page.waitFor(2000); // stay 2 secs
+  await page.goto(rs2[1].link);
+  await page.waitFor(3000);
   await page.close();
   await browser.close();
 };
