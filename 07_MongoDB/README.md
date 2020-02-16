@@ -50,3 +50,5 @@
     db.user.deleteOne({country: 8})
     db.user.deleteMany({country: 82})
    ~~~
+
+> [reference](https://github.com/booldook/2109-kn-node-mongoose/blob/master/readme.md)
