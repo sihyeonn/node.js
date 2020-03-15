@@ -1,4 +1,4 @@
 import Vue from 'vue';
-import Number from './Number.vue';
+import Number from './Number';
 
-new Vue().$mount('#root');
+new Vue(Number).$mount('#root');
