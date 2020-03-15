@@ -1,11 +1,15 @@
+const path = require('path');
+
 module.exports = {
   entry: {
-    app: './main.js'
+    app: path.join(__dirname, 'main.js')
   },
-  module: {},
+  module: {
+    }]
+  },
   plugins: [],
   output: {
     filename: 'app.js',
-    path: './build'
+    path: path.join(__dirname, 'build')
   }
 };
