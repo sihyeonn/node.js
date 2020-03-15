@@ -5,6 +5,9 @@ module.exports = {
     app: path.join(__dirname, 'main.js')
   },
   module: {
+    rules: [{
+      test: /\.vue$/,
+      loader: 'vue-loader',
     }]
   },
   plugins: [],
