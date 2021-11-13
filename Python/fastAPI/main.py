@@ -37,6 +37,11 @@ def update_item(item_id: int, item: Item):
     return {"item_name": item.name, "item_id": item_id, "is_offer": item.is_offer}
 
 
+@app.get("/files/{file_path:path}")
+async def read_file(file_path: str):
+    return {"file_path": file_path}
+
+
 @app.route("/error")
 async def error(request):
     raise RuntimeError("Oh no")
