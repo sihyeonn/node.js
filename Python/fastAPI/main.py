@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from fastapi import FastAPI, Path, Query
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from starlette.applications import Starlette
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
@@ -18,10 +18,10 @@ app.mount('/static', StaticFiles(directory='statics'), name='static')
 
 class Item(BaseModel):
     name: str
-    price: float
+    price: float = Field(..., gt=0)
     tax: Optional[float] = None
     is_offer: Optional[bool] = None
-    description: Optional[str] = None
+    description: Optional[str] = Field(None, title="desc", max_length=300)
 
 
 @app.get("/")
