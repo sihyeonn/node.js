@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from fastapi import FastAPI, Path, Query
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 from starlette.applications import Starlette
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
@@ -16,12 +16,19 @@ app = FastAPI()
 app.mount('/static', StaticFiles(directory='statics'), name='static')
 
 
+class Image(BaseModel):
+    url: HttpUrl
+    name: str
+
+
 class Item(BaseModel):
     name: str
     price: float = Field(..., gt=0)
     tax: Optional[float] = None
     is_offer: Optional[bool] = None
     description: Optional[str] = Field(None, title="desc", max_length=300)
+    tags: List[str] = []
+    images: Optional[List[Image]] = None
 
 
 @app.get("/")
