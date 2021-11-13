@@ -19,7 +19,9 @@ app.mount('/static', StaticFiles(directory='statics'), name='static')
 class Item(BaseModel):
     name: str
     price: float
+    tax: Optional[float] = None
     is_offer: Optional[bool] = None
+    description: Optional[str] = None
 
 
 @app.get("/")
@@ -42,6 +44,15 @@ def read_item(item_id: int, q: Optional[str] = None, short: bool = False):
 def update_item(item_id: int, item: Item):
 
     return {"item_name": item.name, "item_id": item_id, "is_offer": item.is_offer}
+
+
+@app.post("/items/")
+async def create_item(item: Item):
+    item_dict = item.dict()
+    if item.tax:
+        price_with_tax = item.price + item.tax
+        item_dict.update({"price_with_tax": price_with_tax})
+    return item_dict
 
 
 @app.get("/files/{file_path:path}")
