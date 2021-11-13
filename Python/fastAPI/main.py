@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Path, Query
 from pydantic import BaseModel
 from starlette.applications import Starlette
 from starlette.staticfiles import StaticFiles
@@ -40,7 +40,11 @@ async def read_items(q: Optional[str] = Query(None, min_length=3, max_length=50,
 
 
 @app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None, short: bool = False):
+def read_item(
+        item_id: int = Path(..., ge=1, le=1000),
+        q: Optional[str] = None,
+        short: bool = False
+):
     item = {"item_id": item_id}
 
     if q:
