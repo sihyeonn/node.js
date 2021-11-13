@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import List, Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from pydantic import BaseModel
 from starlette.applications import Starlette
 from starlette.staticfiles import StaticFiles
@@ -27,6 +27,16 @@ class Item(BaseModel):
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+
+@app.get("/items/")
+async def read_items(q: Optional[str] = Query(None, min_length=3, max_length=50, regex="^fixedquery$"), qs: List[str] = Query([], alias="item-queries")):
+    results = {"items": [{"item_id": "1"}, {"item_id": "2"}]}
+    if q:
+        results.update({"q": q})
+    if qs:
+        results.update({"qs": qs})
+    return results
 
 
 @app.get("/items/{item_id}")
