@@ -4,7 +4,7 @@ from starlette.applications import Starlette
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 
-from routers import items, users
+from .routers import items, users
 
 
 templates = Jinja2Templates(directory='templates')
