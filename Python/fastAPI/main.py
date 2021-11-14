@@ -44,15 +44,18 @@ class Item(BaseModel):
         }
 
 
-class UserIn(BaseModel):
+class UserBase(BaseModel):
     username: str
     password: str
     full_name: Optional[str] = None
 
 
-class UserOut(BaseModel):
-    username: str
-    full_name: Optional[str] = None
+class UserIn(UserBase):
+    password: str
+
+
+class UserOut(UserBase):
+    pass
 
 
 @app.get("/")
