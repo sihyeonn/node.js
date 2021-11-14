@@ -1,5 +1,7 @@
 from typing import List, Optional
 
+import datetime import time
+
 from fastapi import FastAPI, Path, Query, Body
 from pydantic import BaseModel, Field, HttpUrl
 from starlette.applications import Starlette
@@ -29,6 +31,7 @@ class Item(BaseModel):
     description: Optional[str] = Field(None, title="desc", max_length=300)
     tags: List[str] = []
     images: Optional[List[Image]] = None
+    purchased_at: Optional[time] = None
 
     class Config:
         schema_extra = {
