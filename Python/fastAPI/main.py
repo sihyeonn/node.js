@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from fastapi import FastAPI, Path, Query
+from fastapi import FastAPI, Path, Query, Body
 from pydantic import BaseModel, Field, HttpUrl
 from starlette.applications import Starlette
 from starlette.staticfiles import StaticFiles
@@ -29,6 +29,16 @@ class Item(BaseModel):
     description: Optional[str] = Field(None, title="desc", max_length=300)
     tags: List[str] = []
     images: Optional[List[Image]] = None
+
+    class Config:
+        schema_extra = {
+                "examples": {
+                   "name": "Foo",
+                   "description": "A very nice Item",
+                   "price": 45.2,
+                   "tax": 4.52,
+                 }
+        }
 
 
 @app.get("/")
@@ -62,7 +72,34 @@ def read_item(
 
 
 @app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
+def update_item(
+        *,
+        item_id: int,
+        item: Item = Body(
+            ...,
+            examples= {
+                "normal": {
+                    "summary": "A normal example",
+                    "description": "A **normal** item",
+                    "value": {
+                       "name": "Foo",
+                       "description": "A very nice Item",
+                       "price": 45.2,
+                       "tax": 4.52,
+                    }
+                 },
+                "invalid": {
+                    "summary": "An invalid example",
+                    "description": "An **invalid** item",
+                    "value": {
+                       "name": "Foo",
+                       "description": "A very nice Item",
+                       "price": 0
+                    }
+                 },
+            }
+        )
+):
 
     return {"item_name": item.name, "item_id": item_id, "is_offer": item.is_offer}
 
