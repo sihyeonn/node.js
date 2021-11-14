@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-import datetime import time
+from datetime import time
 
 from fastapi import FastAPI, Path, Query, Body
 from pydantic import BaseModel, Field, HttpUrl
@@ -42,6 +42,17 @@ class Item(BaseModel):
                    "tax": 4.52,
                  }
         }
+
+
+class UserIn(BaseModel):
+    username: str
+    password: str
+    full_name: Optional[str] = None
+
+
+class UserOut(BaseModel):
+    username: str
+    full_name: Optional[str] = None
 
 
 @app.get("/")
@@ -119,6 +130,11 @@ async def create_item(item: Item):
 @app.get("/files/{file_path:path}")
 async def read_file(file_path: str):
     return {"file_path": file_path}
+
+
+@app.post("/user/", response_model=UserOut)
+async def create_user(user: UserIn):
+    return user
 
 
 @app.route("/error")
