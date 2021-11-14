@@ -63,7 +63,7 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/items/")
+@app.get("/items/", tags=["items"])
 async def read_items(q: Optional[str] = Query(None, min_length=3, max_length=50, regex="^fixedquery$"), qs: List[str] = Query([], alias="item-queries")):
     results = {"items": [{"item_id": "1"}, {"item_id": "2"}]}
     if q:
@@ -73,7 +73,7 @@ async def read_items(q: Optional[str] = Query(None, min_length=3, max_length=50,
     return results
 
 
-@app.get("/items/{item_id}")
+@app.get("/items/{item_id}", tags=["items"])
 def read_item(
         item_id: int = Path(..., ge=1, le=1000),
         q: Optional[str] = None,
@@ -88,7 +88,7 @@ def read_item(
     return item
 
 
-@app.put("/items/{item_id}")
+@app.put("/items/{item_id}", tags=["items"])
 def update_item(
         *,
         item_id: int,
@@ -121,7 +121,7 @@ def update_item(
     return {"item_name": item.name, "item_id": item_id, "is_offer": item.is_offer}
 
 
-@app.post("/items/")
+@app.post("/items/", tags=["items"])
 async def create_item(item: Item):
     item_dict = item.dict()
     if item.tax:
@@ -130,12 +130,12 @@ async def create_item(item: Item):
     return item_dict
 
 
-@app.get("/files/{file_path:path}")
+@app.get("/files/{file_path:path}", tags=["files"])
 async def read_file(file_path: str):
     return {"file_path": file_path}
 
 
-@app.post("/user/", response_model=UserOut)
+@app.post("/users/", response_model=UserOut, tags=["users"])
 async def create_user(user: UserIn):
     return user
 
