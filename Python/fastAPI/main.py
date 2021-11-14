@@ -10,7 +10,11 @@ from routers import items, users
 templates = Jinja2Templates(directory='templates')
 
 
-app = FastAPI()
+app = FastAPI(
+        title="PracticeApp",
+        description="do awesome stuff. 🚀",
+        version="0.0.1"
+)
 
 
 app.mount('/static', StaticFiles(directory='statics'), name='static')
