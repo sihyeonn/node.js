@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ now }}
     {{ message }}
   </div>
 </template>
@@ -16,7 +17,17 @@ export default {
   },
   data() {
     return {
-      message: this.msg ?? 'This is a MyComponent'
+      message: this.msg ?? 'This is a MyComponent',
+      now: 0
+    }
+  },
+  mounted() {
+    this.updateNow()
+    setInterval(this.updateNow, 1000)
+  },
+  methods: {
+    updateNow() {
+      this.now = Math.round(Date.now()/1000)
     }
   }
 }
