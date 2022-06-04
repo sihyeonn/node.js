@@ -24,17 +24,29 @@ public class SpringConfig {
     }
     */
 
+    /**
+     * This is for JpaMemberRepository
     private EntityManager em;
 
     @Autowired
     public SpringConfig(EntityManager em) {
         this.em = em;
     }
+    */
 
+    private final MemberRepository memberRepository;
+
+    @Autowired
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    /**
     @Bean
     public MemberRepository memberRepository() {
         // return new MemoryMemberRepository();
         // return new JdbcTemplateMemberRepository(dataSource);
         return new JpaMemberRepository(em);
     }
+    */
 }
